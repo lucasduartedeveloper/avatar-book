@@ -96,9 +96,11 @@ $(document).ready(function() {
 
         user.name = name;
 
+        showLoading();
         updateUser(function() {
             getUsers(function() {
                 drawUsers();
+                hideLoading();
             });
         });
     };
@@ -279,14 +281,38 @@ $(document).ready(function() {
         user.mouth = value;
     };
 
+    showLoading();
     loadImages(function() {
         getUsers(function() {
             drawUsers();
+            hideLoading();
         });
     });
 
     window.requestAnimationFrame(animate);
 });
+
+var showLoading = function() {
+    loadingView = 
+    document.createElement("div");
+    loadingView.style.position = "absolute";
+    loadingView.style.background = "rgba(0,0,0,0.5)";
+    loadingView.style.color = "#fff";
+    loadingView.innerText = "Wait...";
+    loadingView.style.textAlign = "center";
+    loadingView.style.fontSize = "48px";
+    loadingView.style.lineHeight = (sh)+"px";
+    loadingView.style.left = (0)+"px";
+    loadingView.style.top = (0)+"px";
+    loadingView.style.width = (sw)+"px";
+    loadingView.style.height = (sh)+"px";
+    loadingView.style.zIndex = "15";
+    document.body.appendChild(loadingView);
+};
+
+var hideLoading = function() {
+    loadingView.remove();
+};
 
 var users = [
     { name: "other", body: 0, hair: 0, eye: 0, nose: 0, mouth: 0, likes: 23 },
@@ -422,9 +448,11 @@ var drawUsers = function() {
             var likes = users[this.n].likes + 1;
             users[this.n].likes = likes;
 
+            showLoading();
             updateLikes(users[this.n], function() {
                 getUsers(function() {
                     drawUsers();
+                    hideLoading();
                 });
             });
         };
