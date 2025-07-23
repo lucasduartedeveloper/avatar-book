@@ -410,8 +410,10 @@ var drawUsers = function() {
         itemView.appendChild(nameView);
 
         nameView.onclick = function() {
+            showLoading();
             getUser(users[this.n].name, function() {
                 window.nameView.value = user.name;
+                hideLoading();
             });
         };
 
