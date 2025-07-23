@@ -330,6 +330,7 @@ var drawUsers = function() {
     listView.style.top = (178)+"px";
     listView.style.width = (sw)+"px";
     listView.style.height = (sh-178)+"px";
+    listView.style.overflowY = "scroll";
     listView.style.zIndex = "15";
     document.body.appendChild(listView);
 
