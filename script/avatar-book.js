@@ -101,6 +101,9 @@ $(document).ready(function() {
             getUsers(function() {
                 drawUsers();
                 hideLoading();
+
+                ws.send("PAPER|"+
+                playerId+"|update");
             });
         });
     };
@@ -289,6 +292,17 @@ $(document).ready(function() {
         });
     });
 
+    ws.onmessage = function(e) {
+        var msg = e.data.split("|");
+        if (msg[0] == "PAPER" &&
+            msg[1] != playerId &&
+            msg[2] == "update") {
+            getUsers(function() {
+                drawUsers();
+            });
+        }
+    };
+
     window.requestAnimationFrame(animate);
 });
 
@@ -456,6 +470,9 @@ var drawUsers = function() {
                 getUsers(function() {
                     drawUsers();
                     hideLoading();
+
+                    ws.send("PAPER|"+
+                    playerId+"|update");
                 });
             });
         };
